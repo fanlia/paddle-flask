@@ -1,4 +1,4 @@
-FROM registry.baidubce.com/paddlepaddle/paddle:2.1.3-gpu-cuda10.2-cudnn7
+FROM paddlecloud/paddleocr:2.6-cpu-7f6c9a
 
 WORKDIR /code
 ENV FLASK_APP=app.py

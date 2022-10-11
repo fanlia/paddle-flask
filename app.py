@@ -1,3 +1,7 @@
+# paddleocr loaded from local directory
+import sys
+sys.path.append('/home/PaddleOCR')
+
 import os
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
