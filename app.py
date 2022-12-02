@@ -14,7 +14,15 @@ CORS(app)
 app.config['JSON_AS_ASCII'] = False
 app.config['JSONIFY_MIMETYPE'] = "application/json;charset=utf-8"
 
-paddle_ocr = PaddleOCR(use_gpu=False, lang='ch')
+paddle_ocr_ch = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='ch')
+paddle_ocr_en = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='en')
+paddle_ocr_cht = PaddleOCR(use_gpu=False, use_angle_cls=True, lang='chinese_cht')
+
+paddle_ocr_map = {
+    'ch': paddle_ocr_ch,
+    'en': paddle_ocr_en,
+    'chinese_cht': paddle_ocr_cht
+}
 
 def image_template_search(image, template):
     image = np.frombuffer(image, np.uint8)
@@ -34,6 +42,8 @@ def image_template_search(image, template):
 def ocr_route():
     if request.method == 'POST':
         buf = request.files['file'].read()
+        lang = request.form.get('lang') or 'ch'
+        paddle_ocr = lang and paddle_ocr_map.get(lang)
         result = paddle_ocr.ocr(buf, cls=True)
 
         return jsonify({'result': result})
