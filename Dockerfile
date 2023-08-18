@@ -1,4 +1,4 @@
-FROM paddlecloud/paddleocr:2.6-cpu-7f6c9a
+FROM registry.baidubce.com/paddlepaddle/paddle:2.5.1
 
 WORKDIR /code
 ENV FLASK_APP=app.py

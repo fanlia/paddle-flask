@@ -1,6 +1,3 @@
-# paddleocr loaded from local directory
-import sys
-sys.path.append('/home/PaddleOCR')
 
 import os
 from flask import Flask, request, jsonify, render_template
@@ -46,7 +43,7 @@ def ocr_route():
         paddle_ocr = lang and paddle_ocr_map.get(lang)
         result = paddle_ocr.ocr(buf, cls=True)
 
-        return jsonify({'result': result})
+        return jsonify({'result': result[0]})
     else:
         return render_template('upload.html')
 
@@ -62,7 +59,7 @@ def image_template_route():
         return render_template('image_template.html')
 
 if __name__ == "__main__":
-    if os.getenv('FLASK_ENV') == 'development':
+    if os.getenv('FLASK_DEBUG') == 'true':
         app.run(host='0.0.0.0', port=5000, debug=True)
     else:
         app.run(host='0.0.0.0', port=5000)
